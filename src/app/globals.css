@@ -1,0 +1,126 @@
+/*tailwind for easier styling and mobile -> desktop layouts*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "tailwindcss";
+
+/*Default light theme*/
+:root
+{
+  --gradient-base: #ffffff;
+  --text-color: #0a0a0a;
+  --bg-color : #ededed; /*reduce contrast*/
+  --circle-gradient: radial-gradient(circle, #e6e6e6 0%,
+    rgba(230,230,200,0.9) 1%,
+    rgba(200,200,200,0.3) 10%,
+    rgba(180,180,180,0.2) 20%,
+    rgba(160,160,160,0.1) 60%,
+    rgba(240,240,240) 100%);
+}
+
+/*Dark mode*/
+.dark
+{
+  --gradient-base: #000000;
+  --text-color: #ededed;
+  --bg-color: #0a0a0a;
+    --circle-gradient: radial-gradient(circle, #161616 0%,
+    rgba(19,20,18,0.9) 1%,
+    rgba(48,40,50,0.3) 10%,
+    rgba(45,40,50,0.2) 20%,
+    rgba(80,75,85,0.1) 60%,
+    rgba(65,60,65) 100%);
+}
+
+/*default body and bg*/
+body
+{
+  color: #ededed;
+  background : #0a0a0a;
+  font-family: "Inter", sans-serif;
+}
+
+/* Circle css for landing page */
+/*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+/*The "," is css shorthand for saying both have same values. Base styles for large screens (like desktops and normal laptops)*/
+.bg-circle-container
+{
+  position : absolute;
+  top:50%;
+  left :50%;
+  transform :translate(-50%, -50%);
+  width: 1100px;
+  height :1100px;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.bg-circle-background
+{
+  position : absolute;
+  width :100%;
+  height:100%;
+  border-radius :50%;
+  background-color: rgba(0,0,0,1);
+  z-index: -1; /* Behind circle*/
+}
+
+.bg-circle
+{
+  top:50%;
+  left :50%;
+  transform :translate(-50%, -50%);
+  width: 1100px;
+  height :1100px;
+  border-radius: 50%;
+  background : radial-gradient(circle, #161616 0%,
+    rgba(19,20,18,0.9) 1%,
+    rgba(48,40,50,0.3) 10%,
+    rgba(45,40,50,0.2) 20%,
+    rgba(80,75,85,0.1) 60%,
+    rgba(65,60,65) 100%);
+  z-index: 0
+}
+
+/*to match with uniRecommender logo*/
+.color
+{
+  background-color: #766c77;
+}
+
+/*----------------------------------------------------------------------------------------------------------------------------*/
+
+/* For navbar*/
+.glass
+{
+  background: linear-gradient(135deg, rgba(255, 255,255, 0.1), rgba(255,255,255,0));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius:20px;
+  border: 1px solid rgba(255, 255,255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.35);
+}
+
+html
+{
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased; /*smooth jagged edges, especially for dark modes (suggestion by Kenodh Perera) */
+  -moz-osx-font-smoothing: grayscale; /* same as above, but for firefox and maxcOS */
+  touch-action: manipulation; /* touchscreen (as I use touchscreen) */
+}
+
+/* For aurora bg */
+
+@theme inline
+{
+  --animate-aurora: aurora 60s linear infinite;
+  @keyframes aurora {
+  from {
+    backgroundPosition: 50% 50%, 50% 50%;
+    }
+  to {
+    backgroundPosition: 350% 50%, 350% 50%;
+    }
+  }
+}

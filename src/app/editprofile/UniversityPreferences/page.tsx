@@ -21,6 +21,7 @@ export default function MyAccountPage()
     
   const [ loading, setLoading] = useState(false);
   const [status, setStatus ] = useState("");
+  const [hasProfile, setHasProfile] = useState(true);
 
   useEffect(() => {
     //gets data and sets it to corresponding variables
@@ -39,8 +40,9 @@ export default function MyAccountPage()
 
             if (error || ! personal_data)
             {
-                console.error("Error fetching data:", error?.message || "No user data.");
-                return null;
+              setHasProfile(false);
+              console.log("Error fetching data:", error?.message || "No user data.");
+              return null;
             }  
         
             const {data : course_names, error : courseError } = await supabase
@@ -92,53 +94,61 @@ export default function MyAccountPage()
   {
     setLoading(true);
 
-    try
-    {
-      const supabase = await getSupabase();
-      const {data : { user }, error : authError} = await supabase.auth.getUser();
-      if (authError || !user)
-      {
-        console.error("Auth Error: ", authError?.message || "No user found!");
-        alert("Auth failed. Log in again.");
-        return null;
+    if(!hasProfile)
+      { 
+        setStatus("Failed. Your account does not exist in the database. Please delete your account and re sign up.");
+        setLoading(false);
       }
+    else
+    {
+      try
+      {
+        const supabase = await getSupabase();
+        const {data : { user }, error : authError} = await supabase.auth.getUser();
+        if (authError || !user)
+        {
+          console.error("Auth Error: ", authError?.message || "No user found!");
+          alert("Auth failed. Log in again.");
+          return null;
+        }
 
-      const { error : updateError} = await supabase
-        .from("students")
-        .update({
-            preferred_campus_type : form.preferred_campus_type,
-            preferred_assessment_type :form.preferred_assessment_type,
-            course_for_uni : form.course_for_uni,
-            wanted_budget: form.accommodationBudget + 9000,
-            wanted_club_count :form.wanted_club_count,
-            distance_from_home: form.distance_from_home,
-            has_entrance_test: form.has_entrance_test,
-            placement_or_abroad_year : form.placement_or_abroad_year,
-            updated_at : new Date().toISOString(),
-        })
-        .eq("user_id", user.id)
+        const { error : updateError} = await supabase
+          .from("students")
+          .update({
+              preferred_campus_type : form.preferred_campus_type,
+              preferred_assessment_type :form.preferred_assessment_type,
+              course_for_uni : form.course_for_uni,
+              wanted_budget: form.accommodationBudget + 9000,
+              wanted_club_count :form.wanted_club_count,
+              distance_from_home: form.distance_from_home,
+              has_entrance_test: form.has_entrance_test,
+              placement_or_abroad_year : form.placement_or_abroad_year,
+              updated_at : new Date().toISOString(),
+          })
+          .eq("user_id", user.id)
+        
+
+        if  (updateError )
+        {
+          console.error("Error updating database: ", updateError)
+          alert("Update failed. Try again.");
+        }
+        else
+        {
+          setStatus("Updated!");
+          fetch("/api/generate-student-vector", {method: 'POST' })
+            .then(() => {console.log("Student vector generation complete");})
+            .catch((error) => {console.error("Student vector generation failed. :(", error);});
+        }
+      }
       
-
-      if  (updateError )
+      catch (error)
       {
-        console.error("Error updating database: ", updateError)
-        alert("Update failed. Try again.");
+        console.error("Unknown error: ",error);
+        alert("Something went wrong. Try again!");
       }
-      else
-      {
-        setStatus("Updated!");
-        fetch("/api/generate-student-vector", {method: 'POST' })
-          .then(() => {console.log("Student vector generation complete");})
-          .catch((error) => {console.error("Student vector generation failed. :(", error);});
-      }
+      finally { setLoading(false);}
     }
-    
-    catch (error)
-    {
-      console.error("Unknown error: ",error);
-      alert("Something went wrong. Try again!");
-    }
-    finally { setLoading(false);}
   }
 
   return (

@@ -30,8 +30,8 @@ export default async function ProfilePage()
 
   if (error || student === null)
   {
-    console.error("Error fetching student details: ", error?.message || "Student not found");
-    return <p>Could not load student profile. Error: {error?.message}</p>
+    console.log("Error fetching student details: ", error?.message || "Student not found");
+    return <p className="text-gray-700 dark:text-gray-400">Could not load student profile. Please delete your profile and sign up again. Otherwise, please contect UniRecommender.</p>
   }
 
   if (recommendationError || !recommendations)

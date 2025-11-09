@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import {getSupabase } from "@/lib/supabase/server";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
 export async function login (formData : FormData)
 {
@@ -55,7 +56,7 @@ export async function deleteList(id: string)
 
 export async function signup(formData : FormData)
 {
-  const supabase = await getSupabase()
+  const supabase = await getSupabase();
 
   const signUpDetails = 
   {
@@ -83,4 +84,48 @@ export async function logout()
   const supabase = await getSupabase();
   await supabase.auth.signOut();
   redirect("/auth/signin");
+}
+
+export async function deleteAccount()
+{
+  //delete from student to remove all data (other than in auth table), so can delete properly
+  const supabaseAdmin = await getSupabaseAdmin();
+  const supabase  =await getSupabase(); //needed to get auth session (cookies)
+
+  const { data: {user}, error: authenticationError} = await supabase.auth.getUser();
+
+  if (authenticationError|| !user) 
+  {
+    console.error("Auth error:", authenticationError?.message || "No user found");
+    return {success: false, error:authenticationError?.message};
+  }
+
+  const {data, error: deleteError} = await supabaseAdmin
+  .from("students")
+  .delete()
+  .eq("user_id", user?.id)
+
+  if (deleteError)
+  {
+    console.log("Error deleting student from student table");
+    console.error("An error occurred");
+    return {success: false, error:deleteError.message};
+  }
+
+  //delete account
+  const {error: deleteAccountError} = await supabaseAdmin.auth.admin.deleteUser(user.id);
+
+    if (deleteAccountError)
+  {
+    console.log("Error deleting student from auth table");
+    console.error("An error occurred");
+    return {success: false, error:deleteAccountError.message};
+  }
+
+  return { success: true};
+
+  //sign out (deleting user does not auto sign user out)
+  await supabase.auth.signOut();
+  redirect("/auth/signup");
+
 }

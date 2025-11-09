@@ -3,6 +3,8 @@
 import {useEffect, useState } from "react";
 import SettingsTabs from "@/components/SettingsTabs";
 import {getSupabase } from "@/lib/supabase/client";
+import {useRouter } from "next/navigation";
+import {deleteAccount} from "@/app/actions"
 
 export default function MyAccountPage()
 {
@@ -11,6 +13,29 @@ export default function MyAccountPage()
   const [address, setAddress ] = useState("");
   const [ loading, setLoading] = useState(false);
   const [status, setStatus ] = useState("");
+  const [hasProfile, setHasProfile] = useState(true);
+
+  const router = useRouter();
+  const [ ConfirmDelete, setConfirmDelete]= useState (false);
+
+  function handleDelete()
+  {
+    setConfirmDelete(true);
+  }
+
+  //delete list, refresh page to show new table
+  async function Delete()
+  {
+    await deleteAccount();
+    setConfirmDelete(false);
+    router.refresh();
+  }
+
+  function cancelDelete()
+  {
+    setConfirmDelete(false);
+  }
+
 
   useEffect(() => {
     //gets data and sets it to corresponding variables
@@ -27,14 +52,15 @@ export default function MyAccountPage()
 
       if (error || ! personal_data)
       {
-        console.error("Error fetching data:", error?.message || "No user data.");
+        console.log("Error fetching data:", error?.message || "No user data.");
+        setHasProfile(false);
         return null;
       }
       else
       {
-        setName(personal_data.name);
-        setLocation(personal_data.location);
-        setAddress(personal_data.address);
+        setName(personal_data.name ?? "");
+        setLocation(personal_data.location ?? "");
+        setAddress(personal_data.address ?? "");
       }
     };
     load()
@@ -42,45 +68,53 @@ export default function MyAccountPage()
 
   async function update()
   {
-    setLoading(true);
-
-    try
-    {
-      const supabase = await getSupabase();
-      const {data : { user }, error : authError} = await supabase.auth.getUser();
-      if (authError || !user)
-      {
-        console.error("Auth Error: ", authError?.message || "No user found!");
-        alert("Auth failed. Log in again.");
-        return null;
+    if(!hasProfile)
+      { 
+        setStatus("Failed. Your account does not exist in the database. Please delete your account and re sign up.");
+        setLoading(false);
       }
+    else
+    {
+      setLoading(true);
 
-      const { error : updateError} = await supabase
-        .from("students")
-        .update({name, location, address, updated_at : new Date().toISOString(),})
-        .eq("user_id", user.id)
+      try
+      {
+        const supabase = await getSupabase();
+        const {data : { user }, error : authError} = await supabase.auth.getUser();
+        if (authError || !user)
+        {
+          console.error("Auth Error: ", authError?.message || "No user found!");
+          alert("Auth failed. Log in again.");
+          return null;
+        }
+
+        const { error : updateError} = await supabase
+          .from("students")
+          .update({name, location, address, updated_at : new Date().toISOString(),})
+          .eq("user_id", user.id)
+        
+
+        if (updateError )
+        {
+          console.error("Error updating database: ", updateError)
+          alert("Update failed. Try again.");
+        }
+        else
+        {
+          setStatus("Updated!");
+          fetch("/api/generate-student-vector", {method: 'POST' })
+            .then(() => {console.log("Student vector generation complete");})
+            .catch((error) => {console.error("Student vector generation failed. :(", error);});
+        }
+      }
       
-
-      if (updateError )
+      catch (error)
       {
-        console.error("Error updating database: ", updateError)
-        alert("Update failed. Try again.");
+        console.error("Unknown error: ",error);
+        alert("Something went wrong. Try again!");
       }
-      else
-      {
-        setStatus("Updated!");
-        fetch("/api/generate-student-vector", {method: 'POST' })
-          .then(() => {console.log("Student vector generation complete");})
-          .catch((error) => {console.error("Student vector generation failed. :(", error);});
-      }
+      finally { setLoading(false);}
     }
-    
-    catch (error)
-    {
-      console.error("Unknown error: ",error);
-      alert("Something went wrong. Try again!");
-    }
-    finally { setLoading(false);}
   }
 
   return (
@@ -113,13 +147,44 @@ export default function MyAccountPage()
             />
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-between w-full">
+            <button
+              onClick={handleDelete}
+              className = "rounded font-semibold absolute-left text-white bg-red-700 hover:bg-red-800 px-6 py-2"
+              >Delete Account
+            </button>
+
             <button
               onClick={update}
               disabled={loading}
               className= {`rounded font-semibold px-6 py-2 text-white ${ loading? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"}`}
               >{loading ?"Saving..." :"Update"}
             </button>
+
+
+            {ConfirmDelete && (
+            <div className ="flex justify-center items-center z-50 fixed bg-black bg-opacity-50 inset-0">
+              <div className="bg-white p-6 rounded-lg shadow-lg text-center space-y-4">
+                <p className= "text-lg text-grayu text-gray-800">Are you sure you want to delete your account?</p>
+                <div className="flex justify-center space-x-4">
+                  <button
+                    onClick={ Delete}
+                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
+                    >
+                      Delete
+                  </button>
+
+                  <button
+                    onClick={cancelDelete}
+                    className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded"
+                    >Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+
           </div>
           {status &&( <p className="text-center text-sm text-gray-600">{status}</p>)} {/* Display status*/}
         </section>

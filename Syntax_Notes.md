@@ -27,6 +27,8 @@
 ### `@param {type} name -Description`
     Describes the type of the perameter (optional) and a description of what the perameter does (Optional)
 
+### `x ?? y`
+    return x if it is not falsy (null). y is default value.
 
 ---
 ## HTML code
@@ -76,30 +78,30 @@
 ### `w-x/y`
     sets an element to (x/y) percent of its parent container
 
-### `mb-`
-
+### `mb-a`
+    Adds a margin of 'a' units at the bottom (basically padding on bottom side)
 
 ### `mt-`
-    
+    Adds a margin of 'a' units at the top (basically padding on top side)
 
 ---
 ### `<div>`
-
+    Generic container element - used to group & style elements in its container 
 
 ### `<options>`
-
+    Defines an option in a dropdown (e.g: <select>)
 
 ### `<select>`
-
+    Creates dropdown menu
 
 ### `<datalist>`
-
+    Gives user list of predefined options for an <input> element. 
 
 ### `<strong>`
-
+    Displays text as bold (basically font-bold)
 
 ### `<ul>`
-
+    Defines unordered list. Used mainly for bullet points
 
 ### `<thead>`
     defines table header section. Groups one or more tr rows that contain th cells
@@ -126,7 +128,6 @@
 
 ---
 
-## FUNCTIONS
 
 ### `.map():`
 Transforms each element using whatever function is the parameter and creates a new array of the results. Very commonly used to skip over needing a for loop.  
@@ -172,7 +173,11 @@ array.every(function_to_check_against);
 ```
 
 ### `.parseInt()`
-
+    Takes in a string and returns an int of specific base (e.g: base 10 or base 2)
+**Syntax:** 
+```ts
+    parseInt(input: string, base?: number);
+```
 
 ### `useEffect()`
     A react hook that runs side effects as soon as the component renders. It effects something outside the component. Dependencies array can be null (so not there), but it controls when the useEffect runs. Uses anonymous functions for efficiency as ease of writing.
@@ -184,10 +189,12 @@ useEffect(() => {
 ```
 
 ### `.sort():`
-    
+    Sorts elements in place and returns sorted array. Basically a bubble sort 
 **Syntax:** 
 ```ts
-
+    array.sort((a: arr_type, b: arr_type) => {
+    return a - b; //asc
+    });
 ```
 
 //Function **syntax: ** from w3schools

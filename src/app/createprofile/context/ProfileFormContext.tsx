@@ -39,6 +39,7 @@ const ProfileFormContext= createContext<ProfileFormContextType | undefined>(unde
 interface ProfileFormProviderProps {children :ReactNode}
 
 
+//a central location for final step to access all data
 
 export function ProfileFormProvider({children } : ProfileFormProviderProps)
 {

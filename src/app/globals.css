@@ -10,7 +10,7 @@
   --gradient-base: #ffffff;
   --text-color: #0a0a0a;
   --bg-color : #ededed; /*reduce contrast*/
-  --circle-gradient: radial-gradient(circle, #e6e6e6 0%,
+  --circle-gradient: radial-gradient(circle, #e6e6e6 0%, /* for circle in light mode (lander)*/
     rgba(230,230,200,0.9) 1%,
     rgba(200,200,200,0.3) 10%,
     rgba(180,180,180,0.2) 20%,
@@ -24,12 +24,12 @@
   --gradient-base: #000000;
   --text-color: #ededed;
   --bg-color: #0a0a0a;
-    --circle-gradient: radial-gradient(circle, #161616 0%,
+  --circle-gradient: radial-gradient(circle, #161616 0%, /* for circle in dark mode (lander)*/
     rgba(19,20,18,0.9) 1%,
-    rgba(48,40,50,0.3) 10%,
-    rgba(45,40,50,0.2) 20%,
-    rgba(80,75,85,0.1) 60%,
-    rgba(65,60,65) 100%);
+    rgba(50, 24, 56, 0.3) 10%,
+    rgba(117, 92, 138, 0.2) 20%,
+    rgba(79, 75, 83, 0.1) 60%,
+    rgb(117, 94, 117) 100%);
 }
 
 /*default body and bg*/

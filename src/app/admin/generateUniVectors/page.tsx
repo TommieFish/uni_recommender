@@ -11,7 +11,7 @@ export default function GenerateUniVectors()
   const[vectorFinished,setVectorFinished] = useState(false);
   const[ timeLeft, setTimeLeft] = useState(0);
   const[timeElapsed, setTimeElapsed] = useState(0);
-  const[estimatedTimeLeft, setEstimatedTimeLeft] = useState(30000);
+  const[estimatedTimeLeft, setEstimatedTimeLeft] = useState(45000);
 
   useEffect(() => {
     if (!submitted)

@@ -4,6 +4,7 @@ import {useProfileForm } from "../context/ProfileFormContext";
 import { useRouter } from "next/navigation";
 import {useState, useEffect} from "react";
 import {getSupabase } from "@/lib/supabase/client";
+import Select from "react-select";
 
 type Grade = 
 { 
@@ -91,40 +92,37 @@ export default function GetPredictedGrades()
       {/* table with a list of options*/}
       {predictedGrades.map((predicted_grade : Grade, index : number) => (
         <div key={index} className="flex justify-center gap-4">
+          <div className="w-3/5">
+          {/* selects subject for grade. Allow typing (unlike <select>*/}
+          <Select
+            value= {courses.find ((course) => course.name === predicted_grade.subject)}
+            onChange= {(selected_item) => handleChange(index, "subject", selected_item?.name || "")}
+            options= {courses}
+            getOptionLabel={(course) => course.name}
+            getOptionValue={(course) => course.name}
+            placeholder="Select Subject"
+            isSearchable
+            className="text-center"
+          />
+        </div>
 
-          {/* selects subject for grade*/}
-          <select
-            value={predicted_grade.subject}
-            onChange={(subject) => handleChange(index, "subject", subject.target.value)}
-            className="w-3/5 border rounded-xl p-3 shadow focus:outline-none focus:ring-2 focus:ring-blue-400 text-center"
-            >
-              <option value="">Select Subject</option>
-              {courses.map((course) => (
-                <option 
-                  key={course.id}
-                  value = {course.name}
-                  >{course.name}
-                </option>
-              ))}   
-            </select>
-
-            {/* selects grade for subject*/}
-            <select
-              value={predicted_grade.grade}
-              onChange={(grade) => handleChange(index, "grade", grade.target.value)}
-              className = "w-24 border rounded-xl p-3 shadow focus:outline-none focus:ring-2 focus:ring-blue-400 text-center bg-white"
-              >
-                <option value="">Grade</option>
-                <option value="A*">A*</option>
-                <option value="A">A</option>
-                <option value="B">B</option>
-                <option value="C">C</option>
-                <option value="D">D</option>
-                <option value="E">E</option>
-                <option value="F">F</option>
-                <option value="U">U</option>
-            </select>
-          </div>
+        {/* selects grade for subject*/}
+        <select
+          value={predicted_grade.grade}
+          onChange={(grade) => handleChange(index, "grade", grade.target.value)}
+          className = "w-24 border rounded-xl p-3 shadow focus:outline-none focus:ring-2 focus:ring-blue-400 text-center bg-white"
+          >
+            <option value="">Grade</option>
+            <option value="A*">A*</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+            <option value="F">F</option>
+            <option value="U">U</option>
+        </select>
+      </div>
       ))}
         {error && <p className="text-red-500 text-sm">{error}</p>}
 

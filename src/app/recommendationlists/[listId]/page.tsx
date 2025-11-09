@@ -9,7 +9,6 @@ type RecommendationList =
 {
   id: number,
   title : string
-  description : string
   date_recommended :string
   recommendation_list :{
     cosine : number,
@@ -42,7 +41,7 @@ export default async function RecommendationListPage({params} : {params: Promise
 
   const { data : rawList, error} = await supabase
     .from("student_recommendation")
-    .select("id, user_id, date_recommended, name, description, recommendation_list")
+    .select("id, user_id, date_recommended, name, recommendation_list")
     .eq("id", listId)
     .maybeSingle()
 
@@ -57,7 +56,6 @@ export default async function RecommendationListPage({params} : {params: Promise
   {
     id : rawList.id,
     title : rawList.name?? "Untitled List",
-    description: rawList.description ?? "No description provided",
     date_recommended: rawList.date_recommended,
     recommendation_list :Array.isArray(rawList.recommendation_list) ? rawList.recommendation_list : [],
   }
@@ -137,12 +135,6 @@ export default async function RecommendationListPage({params} : {params: Promise
                 ))}
               </ul>
             ) : (<p>Recommendation not found.</p>)}
-          </section>
-
-          {/* Description (not currently used so delete if not used by sunday)*/}
-          <section className="bg-white shadow-md rounded-lg p-6">
-            <h2 className="text-2xl text-black font-semibold mb-4">Why this recommendation?</h2>
-            <p className="text-gray-700 leading-relaxed">{list.description}</p>
           </section>
         </main>
       </div>

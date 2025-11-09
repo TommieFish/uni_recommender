@@ -1,10 +1,15 @@
 "use client"
 
 import {useRouter } from"next/navigation";
+import { useEffect } from "react";
 
 export default function CreateProfileLanding()
 {
   const router = useRouter();
+
+  useEffect(() => {
+    router.refresh(); //refresh navbar, so people can see admin
+  }, [])
 
   return (
     <div className="flex flex-col items-center text-center space-y-6 w-full px-4">

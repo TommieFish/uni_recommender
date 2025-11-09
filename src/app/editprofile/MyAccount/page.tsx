@@ -93,7 +93,7 @@ export default function MyAccountPage()
             <label className="text-sm text-gray-500 block">Full Name</label>
             <input className = "border w-full rounded px-4 py-2"
               value={name}
-              onChange={entered_name => setName(entered_name.target.value)}
+              onChange={entered_name => setName(entered_name.target.value)} //entered name is event function
             />
           </div>
 

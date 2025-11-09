@@ -8,6 +8,7 @@ import {getSupabase } from "@/lib/supabase/client";
 export default function display()
 {
   //values
+  
   const 
   {
     name,
@@ -25,12 +26,15 @@ export default function display()
     wantedStudentCount
   } = useProfileForm();
 
+  console.log("Name", name);
+
   const router = useRouter();
   const[loading,setLoading ] = useState(false);
   const [ submitted, setSubmitted] = useState(false);
 
   async function Submit()
   {
+    /*
     if (
       !name ||
       !location ||
@@ -49,6 +53,7 @@ export default function display()
       setLoading(false);
       return;
     }
+      */
 
 
     setLoading(true);
@@ -63,6 +68,8 @@ export default function display()
     }
 
     const studentID = user.id;
+    console.log(studentID);
+    console.log("text")
     
     //update student preferences
     try {
@@ -82,12 +89,12 @@ export default function display()
           placement_or_abroad_year: placementOrAbroadYear,
           distance_from_home: distanceFromHome,
           updated_at: new Date().toISOString(),
-          wanted_student_count: wantedStudentCount
+          wanted_num_students: wantedStudentCount
         })
         .eq("user_id", studentID);
       if (updateError)
       {
-        console.error("Error updating student", updateError);
+        console.error("Error updating student", updateError?.message);
         alert("Update failed. Try again. ");
       }
       else setSubmitted(true);

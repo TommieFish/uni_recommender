@@ -108,6 +108,7 @@ export async function createStudentVector(): Promise<number[]>
     0,
   ];
 
+
   //Normalise
   const normalisedFeatures = rawFeatures.map((value, index) => {
     const method = normalisationConfig[index] ?? "none";

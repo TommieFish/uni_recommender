@@ -3,6 +3,7 @@
 import {useEffect, useState } from "react";
 import {motion, AnimatePresence} from "framer-motion";
 import {toast } from "sonner";
+import {useRouter} from "next/navigation";
 
 export default function RecommendationLoading()
 {
@@ -13,6 +14,8 @@ export default function RecommendationLoading()
   const[ timeLeft, setTimeLeft] = useState(0);
   const[timeElapsed, setTimeElapsed] = useState(0);
   const[estimatedTimeLeft, setEstimatedTimeLeft] = useState(8000); //default guess
+
+  const router = useRouter();
 
   useEffect(() => {
     if (!submitted)
@@ -40,6 +43,7 @@ export default function RecommendationLoading()
           else
           {
             toast.error(`Error:  ${result.error || "Unknown error occurred!"}`);
+            if (result.error === "Invalid City") router.push("/editprofile/MyAccount");
           }
         }
 
@@ -55,6 +59,7 @@ export default function RecommendationLoading()
       })
       .catch((error : any) => {
         console.warn("Similarity search error:", error);
+
         clearInterval(timer)
         setVectorFinished(true);
         setShowButton(true);

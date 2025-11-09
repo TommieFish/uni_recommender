@@ -50,6 +50,11 @@ export async function RankedRecommendations(name: string)
     console.log(studentError?.message ? `Auth error: ${studentError?.message}` : "User not authenticated");
     throw new Error(studentError?.message || "User not authenticated")
   }
+  else if (student.course_name === null)
+  {
+    console.log("Preferred course not entered");
+    throw new Error("Preferred course not entered");
+  }
 
   const {data: student_vector, error: studentVectorError} = await supabase
     .from("student_vectors")
@@ -79,6 +84,7 @@ export async function RankedRecommendations(name: string)
   const {data: courses} = await supabase
     .from("course_for_uni")
     .select("course_for_uni_id, entry_requirements_ucas_points, course_name, required_grade")
+
 
   console.log("Num courses fetched: ", courses?.length ?? 0);
 
@@ -224,7 +230,7 @@ export async function RankedRecommendations(name: string)
     student.wanted_budget,
     student.distance_from_home,
     student.preferred_campus_type,
-    student.placement_or_gap_year,
+    student.placement_or_abroad_year,
     student.wanted_club_count,
     student.preferred_assessment_type,
     student.has_entrance_test ? "Yes" : "No",

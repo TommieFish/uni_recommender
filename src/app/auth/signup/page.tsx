@@ -120,7 +120,7 @@ export default function SignupPage()
 
             {/* Google OAuth*/}
             <div className ="flex flex-col items-center border-t pt-6 mt-6 space-y-5">
-              <Suspense fallback={<Button disabled className="w-full max-w-sm">Loading Google OAuth Signup</Button>}>
+              <Suspense fallback={<Button disabled className="w-full max-w-sm">Loading Google OAuth Sign up</Button>}>
                 <SignInClient/>
               </Suspense>
             </div>

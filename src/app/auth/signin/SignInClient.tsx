@@ -48,7 +48,8 @@ export function SignInClient()
 }
 
 
-function GoogleIcon() {
+function GoogleIcon() 
+{
   return (
     <svg
       aria-hidden="true"

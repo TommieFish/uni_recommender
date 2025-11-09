@@ -49,7 +49,7 @@ export default function LoginPage()
             { /* Heading */ }
             <div className="text-center mb-6">
               <h1 className="text-2xl font-bold">Welcome Back</h1>
-              <p className="text-sm text-muted-foreground">Login to your account to continue to Uni Recommender</p>
+              <p className="text-sm text-muted-foreground">Sign in to your account to continue to Uni Recommender</p>
             </div>
 
             { /* Log in through Email */}
@@ -113,7 +113,7 @@ export default function LoginPage()
                 {
                   <Button
                     disabled
-                    className="w-full max-w-sm">Loading Google login...
+                    className="w-full max-w-sm">Loading Google sign in...
                   </Button>
                 }>
                 <SignInClient/>

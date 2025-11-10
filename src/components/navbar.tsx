@@ -208,6 +208,15 @@ export default function GlassmorphNavbar()
                                     >Login
                                 </Link>
                             )}
+
+                        {isAdmin && (
+                        <Link 
+                            key="Admin"
+                            href="/admin"
+                            className= "rounded-full px-4 py-2 transition-colors hover:bg-green-500 hover:text-white dark:text-gray-300 text-gray-500"
+                            >Admin
+                        </Link>
+                    )}
                         
                     </div>
                 </div>

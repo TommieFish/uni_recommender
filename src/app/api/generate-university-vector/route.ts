@@ -1,25 +1,25 @@
-import { NextResponse } from 'next/server';
-import { createUniversityVectors } from '@/lib/algorithms/buildUniversityVector';
+import {NextResponse} from "next/server";
+import { createUniversityVectors } from "@/lib/algorithms/buildUniversityVector";
 
-export async function POST() 
+export async function POST()
 {
-  try 
+  try
   {
-    await createUniversityVectors();
-    console.log("Uni vector creation completed successfully");
-    return NextResponse.json({ success : true});
+    await createUniversityVectors(); //runs algo on server side
+    console.log("University vector creation completed. No errors");
+    return NextResponse.json({success: true});
   }
-  catch (error)
+  catch(error)
   {
-    if (error instanceof Error )
+    if (error  instanceof Error) //when using throw new Error()
     {
-      console.error("Vector generation error. Error:", error.message);
-      return NextResponse.json({ success : false, error : error.message }, {status : 500});
+      console.error("Error generating university vectors. Error is as follows:", error.message);
+      return NextResponse.json({success: false,error: error.message})
     }
-    else 
+    else //not thrown on purpose
     {
-      console.error("Unknown error:", error);
-      return NextResponse.json({ success : false, error: "Unknown error occurred." }, {status : 500})
+      console.error("An unknown error occured :(. The error is:", error);
+      return NextResponse.json({success: false,error: "Unknown"})
     }
   }
 }

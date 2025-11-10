@@ -1,31 +1,29 @@
-import { NextResponse } from 'next/server';
-import { RankedRecommendations } from '@/lib/algorithms/vectorSimilarity';
+import {NextResponse} from "next/server";
+import { RankedRecommendations } from "@/lib/algorithms/vectorSimilarity";
 
-export async function POST(req : Request) 
+export async function POST(request: Request) //has a json request parsed into the post as body. Contains name
 {
-  try 
+  try
   {
-    const body = await req.json();
-    const name = body.name;
-    await RankedRecommendations(name);
-    console.log("Uni vector creation completed successfully");
-    return NextResponse.json({ success : true});
+    const body = await request.json();
+    const name = body.name();
+    await RankedRecommendations(name); //runs algo on server side
+    console.log("Similarity Search completed. No errors");
+    return NextResponse.json({success: true});
   }
-  catch (error)
+  catch(error)
   {
-    if (error instanceof Error )
+    if (error  instanceof Error) //when using throw new Error()
     {
-      console.error("Vector generation error. Error:", error.message);
-      if ((error as any).status ===404)
-      {
-        return NextResponse.json({ success : false, error : error.message}, { status : 404});
-      }
-      return NextResponse.json({ success : false, error : error.message }, {status : 500});
+      console.error("Error running similarity search. Error is as follows:", error.message);
+      if((error as any).status ===404) return NextResponse.json({success: false,error: error.message},{status:404});
+      else return NextResponse.json({success: false,error: error.message})
+
     }
-    else 
+    else //not thrown on purpose
     {
-      console.error("Unknown error:", error);
-      return NextResponse.json({ success : false, error: "Unknown error occurred." }, {status : 500})
+      console.error("An unknown error occured :(. The error is:", error);
+      return NextResponse.json({success: false,error: "Unknown"})
     }
   }
 }

@@ -112,7 +112,7 @@ export default function GetPredictedGrades()
               onChange={(grade) => handleChange(index, "grade", grade.target.value)}
               className = "w-24 border rounded-xl p-3 shadow focus:outline-none focus:ring-2 focus:ring-blue-400 text-center bg-white"
               >
-                <option disabled value="">Grade</option>
+                <option value="">Grade</option>
                 <option value="A*">A*</option>
                 <option value="A">A</option>
                 <option value="B">B</option>

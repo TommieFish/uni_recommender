@@ -5,9 +5,9 @@ import styles from "./ImageSlider.module.css";
 
 const images =
 [
-  "/images/Highlights/slide1.jpg",
-  "/images/Highlights/slide2.jpg",
-  "/images/Highlights/slide3.jpg",
+  "/images/Highlights/EditProfile.jpg",
+  "/images/Highlights/RecommendationList.jpg",
+  "/images/Highlights/RecommendationListOverview.jpg",
 ]
 
 export default function ImageSlider()

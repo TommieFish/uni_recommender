@@ -7,12 +7,12 @@ export function useCurrentUserName()
 
   useEffect(() => {
     const fetchProfileName = async() => {
-      const {data, error} = await getSupabase().auth.getSession();
+      const {data, error} = await getSupabase().auth.getUser();
       if (error)
       {
-        console.error(error);
+        console.log(error);
       }
-      setName(data.session?.user.user_metadata.full_name ?? "?")
+      setName(data.user?.user_metadata.full_name ?? "?")
     }
 
     fetchProfileName();

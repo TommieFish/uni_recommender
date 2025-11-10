@@ -42,7 +42,7 @@ export default function GlassmorphNavbar()
     useEffect(() => {
         async function checkSession ()
         {
-            const {data: session} = await supabase.auth.getSession()
+            const {data: session} = await supabase.auth.getUser() //get user is more secure (checks database for JWT) and returns the same
             setIsLoggedIn(!!session); //needs to convert to bool (session can be null or an object)
         };
         checkSession(); //needs to be a function as uses async

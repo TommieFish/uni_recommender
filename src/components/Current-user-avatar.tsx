@@ -23,7 +23,7 @@ export function CurrentUserAvatar()
   //Returns profile pic (only works with OAuth, or initials of name)
   return (
     <Avatar>
-      {profileImage ? (<AvatarImage src={profileImage} alt={`Profile pic of ${name}`}/>) : <AvatarFallback>{initials}</AvatarFallback>} 
+      {profileImage ? (<AvatarImage src={profileImage} alt={`?`}/>) : <AvatarFallback>{initials}</AvatarFallback>} 
     </Avatar>
   )
 }

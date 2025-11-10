@@ -7,14 +7,18 @@ export function useCurrentUserImage()
 
   useEffect(() => {
     const fetchUserImage = async() => {
-      const {data, error} = await getSupabase().auth.getSession();
+      const {data, error} = await getSupabase().auth.getUser();
       if(error)
       {
-        console.error("An erro has occured: ",error);
+        console.log("An erro has occured: ",error);
       }
-      setImage(data.session?.user.user_metadata.avatar_url ?? null);
+
+      const profilePic = data.user?.user_metadata.avatar_url;
+
+      setImage(profilePic ?? "/images/profile.png");
     }
     fetchUserImage();
+
   },[])
   return image;
 }

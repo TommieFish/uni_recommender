@@ -60,21 +60,18 @@ export default function ProfileView({student, recommendations} : {student : Stud
 
   function cancelDelete()
   {
-    setConfirmDelete(false);
+    setConfirmDelete(false );
     setSelectedRecommendation(null);
   }
 
-  if (!student)
-  {
-    return <p className="text-center text-gray-500">Your profile has not been found :(</p>
-  }
+  if (!student) return <p className="text-center text-gray-500">Your profile has not been found :(</p>
 
   return (
     <div className="flex justify-center items-center text-gray-500 px-4 py-8 min-h-screen">
       <div className = "w-full max-w-3xl bg-white rounded-lg shadow-lg p-6 space-y-6">
-        {/* Header*/}
+        {/* Header*/ }
         <div className="flex items-center space-x-4">
-          <CurrentUserAvatar/>
+          <CurrentUserAvatar  />
           <div>
             <h1 className="text-xl font-bold text-gray-800">{student.name}</h1>
             <p className="text-gray-500 text-sm">{student.email}</p>
@@ -87,28 +84,31 @@ export default function ProfileView({student, recommendations} : {student : Stud
             <h2 className="text-2xl font-bold text-gray-700">Location</h2>
             <p className="text-gray-600">{student.location}</p>
           </div>
-
           <div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Recent Recommendation Lists</h2>
-            {recommendations && recommendations.length > 0 ? (
+            <h2 className="text-gray-800 text-2xl font-bold mb-4">Recent Recommendation Lists</h2>
+            {recommendations && recommendations.length>0 ?
+            (
               <div className="max-h-96 overflow-y-auto pr-2">
-                <ul className="space-y-4">
-                  <li className="grid grid-cols-3 bg-gray-100 rounded-lg px-4 py-2 text-sm text-gray-600">
+                <ul className="space-y-4 bg">
+                  <li className="bg-gray-100 grid grid-cols-3 rounded-lg p-2 text-sm text-gray-600 shadow-xl">
                     <div className="text-left font-medium">List Name:</div>
                     <div className="text-center">Created At:</div>
-                    <div className="text-right invisible">Delete:</div>
+                    <div className= "text-right invisible">Delete:</div>
                   </li>
-
-                  {recommendations.map((recommendation) => (
+                  {recommendations.map((recommendation) =>
+                  (
                     <RecommendationItem
                       key={recommendation.id}
-                      recommendation={recommendation}
-                      onDelete={handleDelete}
+                      recommendation={ recommendation}
+                      onDelete = {handleDelete }
                     />
                   ))}
                 </ul>
               </div>
-            ) : ( <p className="text-gray-500">You currently have no recommendations.</p>)}
+            ) :
+            (
+              <p className = "text-gray-600">You currently have no recommendation lists. Fill in your profile and click "Create" to create one</p>
+            )}
           </div>
 
           {/*Action buttons*/}

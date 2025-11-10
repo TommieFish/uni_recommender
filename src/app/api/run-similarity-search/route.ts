@@ -6,7 +6,7 @@ export async function POST(request: Request) //has a json request parsed into th
   try
   {
     const body = await request.json();
-    const name = body.name();
+    const name = body.name;
     await RankedRecommendations(name); //runs algo on server side
     console.log("Similarity Search completed. No errors");
     return NextResponse.json({success: true});

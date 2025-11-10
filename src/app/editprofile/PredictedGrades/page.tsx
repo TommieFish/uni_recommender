@@ -120,6 +120,8 @@ export default function MyGradesPage()
               </tr>
             </thead>
 
+
+
             <tbody>
               {grades.map((grade, index) =>(
                 <tr key={index} className="border-t">

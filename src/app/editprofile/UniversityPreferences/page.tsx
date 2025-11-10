@@ -160,10 +160,14 @@ export default function MyAccountPage()
         <section  className="rounded-xl bg-white text-gray-500 p-6 space-y-6">
           <div> 
             <label className="text-sm text-gray-500 block">Preferred Campus</label>
-            <input className = "border w-full rounded px-4 py-2"
+            <select className = "border w-full rounded px-4 py-2"
               value={form.preferred_campus_type}
               onChange={entered_campus_type => handleChange("preferred_campus_type", entered_campus_type.target.value)}
-            />
+              >
+                <option disabled value="">Select One</option>
+                <option value="Campus">Campus</option>
+                <option value="City">City</option>
+            </select>
           </div>
 
         {/*Assessment*/}
@@ -200,6 +204,7 @@ export default function MyAccountPage()
         <div> 
             <label className="text-sm text-gray-500 block">Accommodation Budget</label>
             <input className = "border w-full rounded px-4 py-2"
+              type="number"
               value={form.accommodationBudget}
               onChange={entered_budget => handleChange("accommodationBudget", +entered_budget.target.value)}
             />

@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 export async function geocode(city:string) : Promise<{latitude: number; longitude: number}>
 {
   const response = await axios.get('https://api.opencagedata.com/geocode/v1/json', 

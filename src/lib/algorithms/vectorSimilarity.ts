@@ -18,6 +18,11 @@ export async function RankedRecommendations(name: string)
     'U' : 0
   };
 
+  function delay1Sec()
+  {
+    return new Promise(resolve => setTimeout(resolve, 100))
+  }
+
   //
   const hybridWeights = 
   {
@@ -147,8 +152,11 @@ export async function RankedRecommendations(name: string)
     console.log(`Calculating distance between student at ${student.location} and university at ${uni.location}...`);
     const distance = await getCityDistance(student.location, uni.location); //calculates distance using geolib
     console.log(`Distance to ${uni.location}: ${distance} km`);
+    delay1Sec(); //delays a sec as external API has a rate limit of 1 per second - avoid rate limits
+    console.log("delay by 1 sec")
     return distance
   }));
+  console.log("Finished distances");
 
   const normalisedDistancesUnis = normalise(distances, "minmax");
   console.log("Normalized distances:", normalisedDistancesUnis);

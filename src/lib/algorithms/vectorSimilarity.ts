@@ -20,7 +20,7 @@ export async function RankedRecommendations(name: string)
 
   function delay1Sec()
   {
-    return new Promise(resolve => setTimeout(resolve, 100))
+    return new Promise(resolve => setTimeout(resolve, 250))
   }
 
   //

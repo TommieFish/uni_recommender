@@ -153,7 +153,7 @@ export default function MyAccountPage()
 
   return (
     <div className="relative z-[1]">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-15 sm:py-20">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-22 sm:py-27">
         <SettingsTabs />  {/* inbuilt Navbar for editing profiles*/}
 
         {/*Campus */}

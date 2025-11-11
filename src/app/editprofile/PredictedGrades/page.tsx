@@ -108,7 +108,7 @@ export default function MyGradesPage()
 
   return (
     <div className="relative z-[1]">
-      <div className="max-w-2xl mx-auto px-10 sm:px-15 py-6">
+      <div className="max-w-2xl mx-auto px-10 sm:px-15 sm:py-12 py-8">
         <SettingsTabs />  {/* inbuilt Navbar for editing profiles*/}
         <section  className="rounded-xl bg-white text-gray-500 p-6 space-y-6">
           <h2 className="text-lg font-semibold text-gray-800">Predicted Grades</h2>

@@ -30,7 +30,7 @@ export default function EnterCity()
 
   return (
     <div className="flex flex-col items-center text-center space-y-6">
-      <h1 className="font-bold text-3xl text-blue-700">What city do you live in?</h1>
+      <h1 className="font-bold text-3xl text-blue-700">What city or town do you live in?</h1>
       <div className="flex items-center w-full max-w-3xl gap-20 justify-center">
         {/* Back button*/}
         <button

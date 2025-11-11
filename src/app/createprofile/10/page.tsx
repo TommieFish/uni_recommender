@@ -51,8 +51,8 @@ export default function EnterEntranceTest()
           }}
         className={`border rounded-xl p-4 shadow-md w-3/5 focus:outline-none focus:ring-2 text-center text-lg ${!isValid ? "border-red-500 focus:ring-red-400" :"border-blue-300 focus:ring-blue-400"}`}>
         <option value="">Select One</option>
-        <option value="true">Yes</option>
-        <option value="false">No</option>
+        <option value="true">I don't mind</option>
+        <option value="false">I do mind</option>
       </select>
       {/* Next */}
       <button

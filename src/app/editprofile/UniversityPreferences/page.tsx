@@ -189,7 +189,7 @@ export default function MyAccountPage()
             value={form.course_for_uni}
             onChange={entered_course => handleChange("course_for_uni", entered_course.target.value)}
             >
-            <option value="">Select a course</option>
+            <option disabled value="">Select a course</option>
             {courseOptions.map(course => (
                 <option
                     key={course}

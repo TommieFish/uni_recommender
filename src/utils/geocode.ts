@@ -7,7 +7,7 @@ export async function geocode(city:string) : Promise<{latitude: number; longitud
     {
       params: 
       {
-        q: `${city}, UK`,
+        q: `${city.trim()}, UK`,
         key : process.env.NEXT_PUBLIC_OPENCAGE_API_KEY,
         countrycode : 'gb',
         limit: 1

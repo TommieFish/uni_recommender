@@ -42,7 +42,7 @@ export default function EnterCity()
         {/* Input for name*/}
         <input
           value={location}
-          onChange={(nameBox) => {setLocation(nameBox.target.value), setError("")}}
+          onChange={(nameBox) => {setLocation(nameBox.target.value.trim()), setError("")}}
           placeholder = "Enter your city"
           className={`border rounded-xl p-4 shadow-md w-3/5 focus:outline-none focus:ring-2 text-center transition-colors duration-200 text-lg ${!isValid ? "border-red-500 focus:ring-red-400" :"border-blue-300 focus:ring-blue-400"}`}>
         </input>

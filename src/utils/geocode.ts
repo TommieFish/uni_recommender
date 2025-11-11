@@ -17,7 +17,7 @@ export async function geocode(city:string) : Promise<{latitude: number; longitud
 
   const result = response.data.results[0];
 
-  if(!result || !result.geometry || (result.components._type !== "city" && result.components._type !== "town" && result.components._type !== "village"))
+  if(!result || !result.geometry || (result.components._type !== "city" && result.components._type !== "town" && result.components._type !== "village" && result.components._type !== "suburb" && result.components._type !== "neighbourhood"))
   {
     console.error(`${city} is not a city. Please enter an actual city.`);
     throw new Error("Invalid City");

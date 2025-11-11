@@ -18,9 +18,9 @@ export async function RankedRecommendations(name: string)
     'U' : 0
   };
 
-  function delay1Sec()
+  function delay()
   {
-    return new Promise(resolve => setTimeout(resolve, 250))
+    return new Promise(resolve => setTimeout(resolve, 50))
   }
 
   //
@@ -147,16 +147,35 @@ export async function RankedRecommendations(name: string)
   if (vectorError) throw new Error('Failed to fetch university vectors');
   const weights = [0.175, 0.2, 0.15, 0.1, 0.1, 0.05, 0.05, 0.075, 0.1];
 
-  //update location (personalised distance between user and unis)
-  const distances = await Promise.all((universityVectors ?? []).map(async (uni) => {
-    console.log(`Calculating distance between student at ${student.location} and university at ${uni.location}...`);
-    const distance = await getCityDistance(student.location, uni.location); //calculates distance using geolib
-    console.log(`Distance to ${uni.location}: ${distance} km`);
-    delay1Sec(); //delays a sec as external API has a rate limit of 1 per second - avoid rate limits
-    console.log("delay by 1 sec")
-    return distance
-  }));
-  console.log("Finished distances");
+  const distances :number[] = [];
+
+  for(const uni of universityVectors ?? [])
+  {
+    console.log(`Calculating distance between student at ${student.location} and uni at ${uni.location}.`);
+    try
+    {
+      const distance = await getCityDistance(student.location, uni.location); //gets distance between citys with opencagedata's geolib
+      console.log(`Distance between ${student.location} and ${uni.location} is ${distance}`);
+      distances.push(distance);
+    }
+    catch (error : any)
+    {
+      console.log("Error", error);
+      if (error.message === "Invalid City")
+      {
+        console.log("Invalid city");
+        const errorToAddStatus = new Error("Invalid City");
+        Object.assign(errorToAddStatus, {status: 500}); //adds status 500 (internal server error), so frontend detects error
+        throw errorToAddStatus;
+      }
+      else
+      {
+        console.log("Unknown error");
+        distances.push(0);
+      }
+    }
+    await delay(); //API has rate limit, so delay to avoid a socket hangup
+  }
 
   const normalisedDistancesUnis = normalise(distances, "minmax");
   console.log("Normalized distances:", normalisedDistancesUnis);

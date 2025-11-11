@@ -16,6 +16,7 @@ export async function POST(request: Request) //has a json request parsed into th
     if (error  instanceof Error) //when using throw new Error()
     {
       console.error("Error running similarity search. Error is as follows:", error.message);
+      if((error as any).status === 500 && (error as any).message ==="Invalid City") return  NextResponse.json({success: false,error: error.message},{status:500});
       if((error as any).status ===404) return NextResponse.json({success: false,error: error.message},{status:404});
       else return NextResponse.json({success: false,error: error.message})
 

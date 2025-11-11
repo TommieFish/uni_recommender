@@ -12,8 +12,7 @@ export function Footer()
 {
   return (
     <footer className = "py-8 max-w-[1200px] mx-auto px-4">
-      <div className="flex sm:justify-between justify-center items-cetner gap-10 max-sm:flex-col mt-12">
-        <p className="text-gray-700 dark:text-gray-200">© UniRecommender 2025. All rights reserved.</p>
+      <div className="flex sm:justify-between justify-center items-center gap-10 max-sm:flex-col mt-12">
 
         <ul className ="flex flex-wrap gap-5"
           >{socialMediaLinks.map(({href, Icon, label}) => ( //go through each link and create the item

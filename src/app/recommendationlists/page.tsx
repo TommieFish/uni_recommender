@@ -36,7 +36,7 @@ export default async function RecommendationListsPage()
 
   if (recommendationError || !rawRecommendations)
   {
-    console.error("No data on student recommendations");
+    console.error("No data on recommendations");
     return <p className="text-center text-red-500 mt-8">Error: {recommendationError?.message || "You have no recommendation lists yet."}</p>
   }
 

@@ -285,7 +285,7 @@ export async function RankedRecommendations(name: string)
   console.log("Inserted data: ", data);
   if (error)
   {
-    console.error("Insert error", error);
+    console.error("Error adding your recommendation to the database.", error);
     throw new Error(error?.message || "Database error.");
   }
 

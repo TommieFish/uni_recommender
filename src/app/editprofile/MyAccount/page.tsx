@@ -104,7 +104,7 @@ export default function MyAccountPage()
           setStatus("Updated!");
           fetch("/api/generate-student-vector", {method: 'POST' })
             .then(() => {console.log("Student vector generation complete");})
-            .catch((error) => {console.error("Student vector generation failed. :(", error);});
+            .catch((error) => {console.error("Error generating your student vector. :(", error);});
         }
       }
       

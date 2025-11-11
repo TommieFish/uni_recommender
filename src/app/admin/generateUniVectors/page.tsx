@@ -44,7 +44,7 @@ export default function GenerateUniVectors()
 
         console.log(`Uni creation finished in ${duration.toFixed(1)}ms. You may exit the page.`);
         setEstimatedTimeLeft(duration); //continuously set time left dependant on performance
-        setTimeElapsed(duration);
+        setTimeElapsed(duration); //how long it took
         clearInterval(timer);
 
         //Wait 2 secs for smootheness
@@ -82,7 +82,8 @@ export default function GenerateUniVectors()
                 <h1 className="text-l text-gray-800 font-semibold mb-4">Click to start generating uni vectors</h1>
                 <button
                   onClick={() =>{setSubmitted(true)}}
-                  className="text-white bg-blue-600 hover:bg-blue-700 transition-colors px-4 py-2 rounded-md">Start
+                  className="text-white bg-blue-600 hover:bg-blue-700 transition-colors px-4 py-2 rounded-md"
+                  >Start
                 </button>
               </>
             ) : (

@@ -94,7 +94,7 @@ export default function display()
         .eq("user_id", studentID);
       if (updateError)
       {
-        console.error("Error updating student", updateError?.message);
+        console.error("Error updating your profile", updateError?.message);
         alert("Update failed. Try again. ");
       }
       else setSubmitted(true);

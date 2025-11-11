@@ -14,7 +14,8 @@ export default function AdminPage()
       <div className="min-h-screen py-40 bg-gray-50 dark:bg-gray-900 dark:text-gray-100 p-6">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className= "text-4xl font-bold text-indigo-700 dark_text-indigo-400 mb-6">Admin Dashboard</h1>
-          <p className="mb-8 text-lg text-gray-600 dark:text-gray-300">Cuurently only triggers uni vector generation. Extra functionality can be added (such as performance metrics)</p>
+          <p className="mb-8 text-lg text-gray-600 dark:text-gray-300">Cuurently only triggers uni vector generation. MAybe add performance metrics?
+          </p>
 
           <motion.button
             style={{ border,boxShadow}}

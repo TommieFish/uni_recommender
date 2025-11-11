@@ -15,7 +15,7 @@ export default function AboutPage()
 
       <section className="mb-12">
         <h2 className="text-2xl mb-2 font-semibold dark:text-white text-black">The Aim</h2>
-        <p>Uni Recommender helps students discover universities based on interests, grades and preferences about unis. My aim is to allow students to spend more time studying and enjoying their lives, not researching unis. </p>
+        <p>Uni Recommender helps students discover universities based on interests, grades and preferences about unis. My aim is to allow students to spend more time studying and enjoying their lives, not researching universities. </p>
       </section>
 
       <section className="mb-12">

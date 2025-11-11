@@ -34,7 +34,7 @@ export default function LoginPage()
   return (
     <Suspense>
       <div className="relative z-[1]"> 
-        <div className="flex justify-center items-center min-h-20 px-4">
+        <div className="flex justify-center items-center min-h=[calc(100vh-80px)] px-4">
           <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8 relative z-10">
             {/* Logo */}
             <div className="flex justify-center mb-6">
@@ -83,7 +83,7 @@ export default function LoginPage()
                 <button
                   type="button"
                   onClick={() => setShowPassword((prev) => !prev)} //switches the password viewing to opposite setting (plaintext --> hidden and vice versa)
-                  className="absolute right-3 text-muted-foreground hover:text-gray-800"
+                  className="absolute right-10 text-muted-foreground hover:text-gray-800"
                   aria-label={showPassword ? "Hide Password" : "Show Password"} //Hover text
                 >
                   {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}

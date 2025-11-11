@@ -41,7 +41,7 @@ export default function SignupPage()
     }
     catch ( error : any)
     {
-      console.error("Signup error", error)
+      console.error("Sign up error", error)
       toast.error("Something went wrong", {description: error?.message ?? "Please try again later"});
       setIsLoading(false);
     }

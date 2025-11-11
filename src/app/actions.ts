@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import {getSupabase } from "@/lib/supabase/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
+import {toast }from "sonner";
 
 export async function login (formData : FormData)
 {
@@ -10,19 +11,25 @@ export async function login (formData : FormData)
   const signInDetails= {email : formData.get("email") as string, password :formData.get("password") as string}; //inputs
   const { error : signInError } = await supabase.auth.signInWithPassword(signInDetails);
 
+  console.log(signInDetails.email)
+
   if (signInError)
   {
     //no redirect, allow for retry
     if(signInError.message.includes("Invalid login credentials") || signInError.message.includes("Invalid email or password"))
     {
+      console.log("Invalid login credentials or Invalid email or password")
+      console.error("Invalid login credentials");
       return {success: false, message: signInError.message};
     }
     else //unknown errors
     {
+      console.log("Unknown error:", signInError.message)
       redirect(`/error?message=${encodeURIComponent(signInError.message)}`);
     }
   }
 
+  console.log("logged in user")
   return {success :true} //passed all failure tests
 
 }
@@ -64,17 +71,22 @@ export async function signup(formData : FormData)
     password : formData.get("password") as string
   }
 
+  console.log(signUpDetails.email)
+
   const {error :signUpError} = await supabase.auth.signUp(signUpDetails);
 
   if (signUpError)
   {
     if ( signUpError.message.includes('User already registered') || signUpError.message.includes('Invalid email') || signUpError.message.includes('Password should be at least'))
       {
+        console.log("Error signing up, Error:", signUpError);
         return { success: false, message: signUpError.message };
       }
     throw new Error(signUpError?.message);
   }
 
+  toast.error("Please wait a minute for your account to load.");
+  console.log("signed in user")
   return {success : true};
 
 }

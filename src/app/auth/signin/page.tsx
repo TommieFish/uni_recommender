@@ -7,7 +7,7 @@ import Image from "next/image";
 import { Mail, Lock, Eye, EyeOff} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { SignInClient } from "./SignInClient";
-import { SupabaseAuthClient } from "@supabase/supabase-js/dist/module/lib/SupabaseAuthClient";
+import {toast } from "sonner";
 
 export default function LoginPage()
 {
@@ -19,16 +19,25 @@ export default function LoginPage()
   {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const result = await login(formData);
 
-    if(!result.success)
+    try
     {
-      setError(result.message ?? null);
-      return;
-    }
+      const result = await login(formData);
 
-    router.refresh()
-    router.push("/");
+      if(!result.success)
+      {
+        setError(result.message ?? null);
+        return;
+      }
+
+      router.refresh()
+      router.push("/profile");
+    }
+    catch (error : any)
+    {
+      console.error("Sign in error", error)
+      toast.error("Something went wrong", {description: error?.message ?? "Please try again later"});
+    }
   }
 
   return (
@@ -54,7 +63,8 @@ export default function LoginPage()
             </div>
 
             { /* Log in through Email */}
-            <form onSubmit={handleSubmit} className="flex flex-col items-center space-y-4">
+            <form onSubmit={handleSubmit} 
+            className="flex flex-col items-center space-y-4">
 
               { /* Email Input */}
               <div className="flex items-center w-full max-w-sm border rounded-md px-3 py-2">
@@ -69,7 +79,7 @@ export default function LoginPage()
                 />
               </div>
 
-              { /* Password Input */}
+              { /* Password */}
               <div className="flex items-center w-full max-w-sm border rounded-md px3 py-2">
                 <Lock className="text-muted-foreground size-4 mr-2"/>
                 <input 

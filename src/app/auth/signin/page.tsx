@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Mail, Lock, Eye, EyeOff} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { SignInClient } from "./SignInClient";
+import { SupabaseAuthClient } from "@supabase/supabase-js/dist/module/lib/SupabaseAuthClient";
 
 export default function LoginPage()
 {
@@ -91,11 +92,6 @@ export default function LoginPage()
 
               { /* Error Messages */}
               {error && (<p className="text-sm text-red-500 text-center max-w-sm">{error}</p>)}
-
-              { /*< Forgot Password Button */}
-              <div className="w-full text-right text-sm max-w-sm">
-                <a href = "/auth/reset" className="text-primary underline text-blue-600 hover:text-blue-800">Forgot Password?</a>
-              </div>
 
               { /* Submit Button */}
               <Button

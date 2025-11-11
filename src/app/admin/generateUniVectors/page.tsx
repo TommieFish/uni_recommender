@@ -6,6 +6,7 @@ import {toast } from "sonner";
 
 export default function GenerateUniVectors()
 {
+  //Adds state to functional components. One stores the state, and one sets the state. Used over let as causes re-renders (and persists)
   const[name, setName] = useState("");
   const[submitted, setSubmitted] = useState(false);
   const[vectorFinished,setVectorFinished] = useState(false);

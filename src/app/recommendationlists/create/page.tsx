@@ -13,7 +13,7 @@ export default function RecommendationLoading()
   const[showButton, setShowButton ] = useState(false);
   const[ timeLeft, setTimeLeft] = useState(0);
   const[timeElapsed, setTimeElapsed] = useState(0);
-  const[estimatedTimeLeft, setEstimatedTimeLeft] = useState(40000); //default guess, as have to wait 1 sec per distance req
+  const[estimatedTimeLeft, setEstimatedTimeLeft] = useState(60000); //default guess, as have to wait 1 sec per distance req
 
   const router = useRouter();
 

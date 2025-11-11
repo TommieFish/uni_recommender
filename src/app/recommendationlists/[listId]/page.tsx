@@ -101,7 +101,7 @@ export default async function RecommendationListPage({params} : {params: Promise
   return (
     <Suspense>
       <div className="relative z-[1]">
-        <main className="max-w-4xl mx-auto p-6">
+        <main className="max-w-4xl mx-auto p-6 sm:py-20 py-18">
           {/* headers*/}
           <header className="mb-8">
             <h1 className="text-4xl font-bold text-black dark:text-gray-200 mt-1">{list.title}</h1>

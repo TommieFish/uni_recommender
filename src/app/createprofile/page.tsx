@@ -8,7 +8,11 @@ export default function CreateProfileLanding()
   const router = useRouter();
 
   useEffect(() => {
-    router.refresh(); //refresh navbar, so people can see admin
+    if (!sessionStorage.getItem("profileLandingRefreshed")) //only do it once
+    {
+      sessionStorage.setItem("profileLandingRefreshed", "true");
+      window.location.reload(); //refresh navbar, so people can see admin and change login state
+    }
   }, [])
 
   return (

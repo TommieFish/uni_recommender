@@ -32,7 +32,7 @@ export default function LoginPage()
 
       toast.error("Please wait a second for the navbar to refresh. If it does not, try reloading the page (to show logout button)");
       router.refresh()
-      router.push("/profile");
+      router.push("/createprofile");
     }
     catch (error : any)
     {

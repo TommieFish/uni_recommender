@@ -2,6 +2,7 @@ import {getSupabase} from "@/lib/supabase/server";
 import {cosineSimilarity, euclideanDistance, gradeSimilarity} from "@/lib/algorithms/similarity";
 import { getCityDistance } from "@/components/getCityDistance";
 import {normalise } from "./normalisation";
+import {sleep } from "../../utils/sleep"
 
 export async function RankedRecommendations(name: string)
 {
@@ -18,10 +19,6 @@ export async function RankedRecommendations(name: string)
     'U' : 0
   };
 
-  function delay()
-  {
-    return new Promise(resolve => setTimeout(resolve, 50))
-  }
 
   //
   const hybridWeights = 
@@ -174,7 +171,7 @@ export async function RankedRecommendations(name: string)
         distances.push(0);
       }
     }
-    await delay(); //API has rate limit, so delay to avoid a socket hangup
+    await sleep(50); //API has rate limit, so delay to avoid a socket hangup
   }
 
   const normalisedDistancesUnis = normalise(distances, "minmax");

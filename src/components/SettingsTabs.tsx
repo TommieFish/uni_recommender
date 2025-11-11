@@ -15,7 +15,7 @@ export default function SettingsTabs()
   const pathname = usePathname();
 
   return (
-    <div className="border-b border-gray-300 mb-6 py-5"> {/* apply border under (to highlight current section)*/}
+    <div className="border-b border-gray-300 mb-6 sm:py-10 py-6"> {/* apply border under (to highlight current section)*/}
       <h1 className="text-2xl font-bold text-green-800 mb-4">Account Settings</h1>
       <nav className="flex gap-6 text-sm sm:text-base font-medium">
         {tabs.map(tab =>

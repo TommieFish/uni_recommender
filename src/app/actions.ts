@@ -3,7 +3,6 @@
 import { redirect } from "next/navigation";
 import {getSupabase } from "@/lib/supabase/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
-import {toast }from "sonner";
 
 export async function login (formData : FormData)
 {
@@ -11,7 +10,6 @@ export async function login (formData : FormData)
   const signInDetails= {email : formData.get("email") as string, password :formData.get("password") as string}; //inputs
   const { error : signInError } = await supabase.auth.signInWithPassword(signInDetails);
 
-  console.log(signInDetails.email)
 
   if (signInError)
   {
@@ -71,7 +69,6 @@ export async function signup(formData : FormData)
     password : formData.get("password") as string
   }
 
-  console.log(signUpDetails.email)
 
   const {error :signUpError} = await supabase.auth.signUp(signUpDetails);
 
@@ -85,7 +82,6 @@ export async function signup(formData : FormData)
     throw new Error(signUpError?.message);
   }
 
-  toast.error("Please wait a minute for your account to load.");
   console.log("signed in user")
   return {success : true};
 

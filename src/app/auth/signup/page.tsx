@@ -45,6 +45,8 @@ export default function SignupPage()
       toast.error("Something went wrong", {description: error?.message ?? "Please try again later"});
       setIsLoading(false);
     }
+
+    toast("Please wait a second for your account to load.")
   }
 
   return (

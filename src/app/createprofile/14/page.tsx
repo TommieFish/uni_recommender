@@ -34,7 +34,6 @@ export default function display()
 
   async function Submit()
   {
-    /*
     if (
       !name ||
       !location ||
@@ -53,7 +52,6 @@ export default function display()
       setLoading(false);
       return;
     }
-      */
 
 
     setLoading(true);
@@ -95,7 +93,8 @@ export default function display()
       if (updateError)
       {
         console.error("Error updating your profile", updateError?.message);
-        alert("Update failed. Try again. ");
+        console.log("Error updating your profile", updateError?.message);
+        alert("Update failed. Check your details are filled out correctly and try again. ");
       }
       else setSubmitted(true);
     } 

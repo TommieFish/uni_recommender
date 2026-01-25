@@ -114,6 +114,8 @@ export default async function RecommendationListsPage()
                                   <li key={`grade-${i}`}>{entry.subject}: {entry.grade}</li>
                                 ))}
                               </ul>
+                            ) : typeof param.number === "boolean" ? (
+                              <div>{param.number ? "Yes" : "No"}</div>
                             ) : param.number ? (
                               <div>{param.number}</div>
                             ) : (

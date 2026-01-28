@@ -77,17 +77,17 @@ export default function LoginPage()
         if (isFilled || (student.created_at && Date.now() - new Date(student.created_at).getTime() >= 60_000))
         {
           router.push(`${origin}/profile`);
+          toast.error("Please wait a second for the navbar to refresh. If it does not, try reloading the page (to show logout button)");
           return router.refresh();
         }
         else
         {
-          router.refresh();
-          return router.push(`${origin}/createprofile?toast=${encodeURIComponent("Please complete all sections to generate recommendations.")}`);
+          
+          router.push(`${origin}/createprofile?toast=${encodeURIComponent("Please complete all sections to generate recommendations.")}`);
+          toast.error("Please wait a second for the navbar to refresh. If it does not, try reloading the page (to show logout button)");
+          return router.refresh();
         }
 
-
-      toast.error("Please wait a second for the navbar to refresh. If it does not, try reloading the page (to show logout button)");
-      router.refresh()
       //router.push("/createprofile");
     }
     catch (error : any)

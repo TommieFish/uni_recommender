@@ -67,7 +67,7 @@ export async function GET(request : Request)
     return value !== null && value !== undefined && value !== "";
   });
 
-  if (isFilled || (student.created_at && Date.now() - new Date(student.created_at).getTime() <= 60_000))
+  if (isFilled || (student.created_at && Date.now() - new Date(student.created_at).getTime() >= 60_000))
   {
     return NextResponse.redirect(`${origin}/profile`);
   }

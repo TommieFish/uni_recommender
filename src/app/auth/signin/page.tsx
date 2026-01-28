@@ -45,6 +45,7 @@ export default function LoginPage()
         //Makes sure that user has filled in all preferences so that no error is created
         if (studentError || !student)
         {
+          router.refresh()
           return router.push(`${origin}/createprofile?toast=${encodeURIComponent("Please fill in your details to create a recommendation list.")}`);
         }
       
@@ -75,10 +76,12 @@ export default function LoginPage()
       
         if (isFilled || (student.created_at && Date.now() - new Date(student.created_at).getTime() >= 60_000))
         {
+          router.refresh()
           router.push(`${origin}/profile`);
         }
         else
         {
+          router.refresh()
           router.push(`${origin}/createprofile?toast=${encodeURIComponent("Please complete all sections to generate recommendations.")}`);
         }
 

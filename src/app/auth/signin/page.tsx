@@ -8,6 +8,7 @@ import { Mail, Lock, Eye, EyeOff} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { SignInClient } from "./SignInClient";
 import {toast } from "sonner";
+import {getSupabase } from "@/lib/supabase/client";
 
 export default function LoginPage()
 {
@@ -17,6 +18,8 @@ export default function LoginPage()
 
   const handleSubmit = async(event : React.FormEvent<HTMLFormElement>) => 
   {
+
+
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
 
@@ -30,9 +33,58 @@ export default function LoginPage()
         return;
       }
 
+      const supabase = await getSupabase();
+      const {data : { user }} = await supabase.auth.getUser();
+
+      const { data : student, error : studentError } = await supabase
+          .from("students")
+          .select("*")
+          .eq("user_id", user?.id)
+          .single();
+        
+        //Makes sure that user has filled in all preferences so that no error is created
+        if (studentError || !student)
+        {
+          return router.push(`${origin}/createprofile?toast=${encodeURIComponent("Please fill in your details to create a recommendation list.")}`);
+        }
+      
+        //Check required fields for redirect
+        const requiredFields =
+        [
+          "location",
+          "email",
+          "preferred_assessment_type",
+          "preferred_campus_type",
+          "created_at",
+          "name",
+          "course_for_uni",
+          "predicted_grades",
+          "wanted_budget",
+          "wanted_club_count",
+          "has_entrance_test",
+          "placement_or_abroad_year",
+          "distance_from_home"
+        ];
+      
+        const isFilled = requiredFields.every((field) =>
+        {
+          const value = student[field];
+          return value !== null && value !== undefined && value !== "";
+        });
+      
+        if (isFilled || (student.created_at && Date.now() - new Date(student.created_at).getTime() >= 60_000))
+        {
+          router.push(`${origin}/profile`);
+        }
+        else
+        {
+          router.push(`${origin}/createprofile?toast=${encodeURIComponent("Please complete all sections to generate recommendations.")}`);
+        }
+
+
       toast.error("Please wait a second for the navbar to refresh. If it does not, try reloading the page (to show logout button)");
       router.refresh()
-      router.push("/createprofile");
+      //router.push("/createprofile");
     }
     catch (error : any)
     {

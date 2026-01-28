@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { SignInClient } from "./SignInClient";
 import {toast } from "sonner";
 import {getSupabase } from "@/lib/supabase/client";
+import {sleep} from "@/utils/sleep";
 
 export default function LoginPage()
 {
@@ -75,10 +76,12 @@ export default function LoginPage()
       
         if (isFilled || (student.created_at && Date.now() - new Date(student.created_at).getTime() >= 60_000))
         {
-          return router.push(`${origin}/profile`);
+          router.push(`${origin}/profile`);
+          return router.refresh();
         }
         else
         {
+          router.refresh();
           return router.push(`${origin}/createprofile?toast=${encodeURIComponent("Please complete all sections to generate recommendations.")}`);
         }
 

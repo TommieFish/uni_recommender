@@ -69,6 +69,7 @@ export default function LoginPage()
         const isFilled = requiredFields.every((field) =>
         {
           const value = student[field];
+          console.log(value);
           return value !== null && value !== undefined && value !== "";
         });
       

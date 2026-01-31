@@ -3,24 +3,41 @@
 import{useProfileForm } from "../context/ProfileFormContext";
 import { useRouter} from "next/navigation";
 import {useState } from "react"
+import { geocode } from "@/utils/geocode";
 
 export default function EnterCity()
 {
   const {location,setLocation}  = useProfileForm();
   const[error,setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const length = location.trim().length;
   const isValid = length > 0;
 
-  function Next()
+  async function Next()
   {
     if (!isValid)
     {
       setError("Please enter your city.");
       return null;
     }
-    else router.push("/createprofile/3");
+    setLoading(true);
+    setError("");
+    
+    try{
+      await geocode(location); //check city validity
+      router.push("/createprofile/3");
+    }
+    catch(locationError)
+    {
+      console.error("Invalid city entered:", locationError);
+      setError("Please enter a valid UK city or town.");
+    }
+    finally
+    {
+      setLoading(false);
+    }
   }
 
   function Back()
@@ -60,6 +77,5 @@ export default function EnterCity()
       {error && <p className="text-red-500 text-sm">{error}</p>} 
     </div>
   )
-
 
 }

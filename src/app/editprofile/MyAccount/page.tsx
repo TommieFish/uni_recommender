@@ -5,6 +5,7 @@ import SettingsTabs from "@/components/SettingsTabs";
 import {getSupabase } from "@/lib/supabase/client";
 import {useRouter } from "next/navigation";
 import {deleteAccount} from "@/app/actions"
+import { geocode } from "@/utils/geocode";
 
 export default function MyAccountPage()
 {
@@ -76,9 +77,22 @@ export default function MyAccountPage()
     else
     {
       setLoading(true);
+      setStatus("");
+      
 
       try
       {
+        try{
+          await geocode(location);
+        }
+        catch (geocodeError) //not a city
+        {
+          console.error("Geocoding error: ", geocodeError);
+          alert("Failed to verify address. Please make sure your city location is correct.");
+          setLoading (false);
+          return; //stops update
+        }
+
         const supabase = await getSupabase();
         const {data : { user }, error : authError} = await supabase.auth.getUser();
         if (authError || !user)

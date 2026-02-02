@@ -16,14 +16,11 @@ export async function getSupabase() {
         },
         setAll(cookiesToSet) {
           try {
-            cookiesToSet.forEach(({ name, value, options }) => {
-
-              if (name.startsWith("sb-") && name.endsWith("-auth-token")) { return }
-
-
+            cookiesToSet.forEach(({ name, value, options }) =>
+              
               cookieStore.set(name, value, options)
-          })
-          } catch (error) {
+            )
+          } catch {
             // Safe to ignore in Server Components
           }
         },

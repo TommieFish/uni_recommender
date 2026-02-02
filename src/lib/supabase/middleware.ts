@@ -15,6 +15,11 @@ export async function updateSession(request: NextRequest)
       setAll(cookiesToSet)
       {
         cookiesToSet.forEach((cookie) => {
+          if (cookie.name.startsWith("sb-") && cookie.name.endsWith("-auth-token")) 
+            { 
+              return;
+            }
+          
           req.cookies.set(cookie.name, cookie.value);
           res.cookies.set(cookie.name, cookie.value, cookie.options);
         })

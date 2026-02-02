@@ -8,5 +8,5 @@ export async function middleware(request: NextRequest)
 
 export const config = 
 {
-  matcher : ["/editprofile:path*", "/profile", "/recommendationlists:path*", "/signin", "/admin/:path*", "/createprofile:path*", "/((?!api/run-similarity-search).*)"] //paths that require the user to be authed
+  matcher : ["/editprofile:path*", "/profile", "/recommendationlists:path*", "/signin", "/admin/:path*", "/createprofile:path*"] //paths that require the user to be authed
 }
